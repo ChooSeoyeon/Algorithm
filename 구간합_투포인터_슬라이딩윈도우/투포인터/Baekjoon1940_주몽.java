@@ -1,4 +1,4 @@
-package 투포인터;
+package 구간합_투포인터_슬라이딩윈도우.투포인터;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -6,7 +6,7 @@ import java.util.Scanner;
 /*
 [설명]
 - 두 재료의 숫자 합해서 M이 되면 갑옷 만들기 성공
-[접근] 투포인터
+[접근] 구간합_투포인터_슬라이딩윈도우.투포인터
 - 초기 값
 	- a : 정렬된 배열 (1,2,3,4,5,7)
 	- i : 0 (첫번쨰값)

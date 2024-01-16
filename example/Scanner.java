@@ -1,4 +1,4 @@
-package template;
+package example;
 
 public class Scanner {
 	private static int solution(int n) {
