@@ -1,5 +1,12 @@
 package example;
 
+/*
+[설명]
+-
+[접근]
+-
+[메모]
+*/
 public class Scanner {
 	private static int solution(int n) {
 		return n;

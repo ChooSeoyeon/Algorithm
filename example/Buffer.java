@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 -
 [접근]
 -
+[메모]
 */
 public class Buffer {
 	public static void main(String[] args) throws Exception {
