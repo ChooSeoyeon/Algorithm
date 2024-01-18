@@ -1,5 +1,7 @@
 package 정렬.버블정렬;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -8,11 +10,22 @@ import java.util.HashMap;
 - 버블 정렬의 swap이 한 번도 일어나지 않은 루프가 언제인지 인덱스 알아내기
 [접근]
 - 버블 정렬은 사용 불가 (10^5^2=10^10)
-- 변화 많이 일어나야 하는 초반일 수록 인덱스 많이 이동할 거임
-- 끝으로 갈 수록 인덱스 적게 이동할 거임
-- 값들에 대해 정렬 후 인덱스와 정렬 전 인덱스를 비교했을 때 가장 인덱스 이동이 적은 값의 정렬 전 인덱스가 정답임
-- 인덱스 이동이 가장 적은 값이 두 개라면, 그 중 정렬 전 인덱스가 큰 녀석이 정답임
+- 숫자가 뒤로 간단 건 한 턴에 갈 수도 있으므로 횟수와 관련 x
+- 숫자가 앞으로 간단 건 한 턴에 한 번씩밖에 갈 수 없으므로 횟수와 관련 o
+	- 그 턴에 swap이 일어났단 건 누군가는 무조건 앞으로 한 칸 가야 함
+- 앞으로 이동한다는 건 명백한 게임 횟수를 의미함
+- 앞으로 이동한 횟수는 swap이 일어난 게임 횟수이므로, 정답으론 앞으로 이동한 횟수에 1을 더한 값을 내면 됨
 [메모]
+- 매번 다른 애들이 앞으로 한 칸씩 이동할 수도 있는가? 놉 무조건 적어도 한 놈은 매번 이동함
+- 왜 그러냐면, 루프에서 swap이 일어난단건 제자리를 찾아가야 하는 놈이 있단 뜻이고,
+- 그 놈은 자기 자리가 자기보다 더 앞에 있어서 앞으로 매번 한 칸씩 가야 하기 때문임
+- 참고로 자기 자리가 더 뒤에 있는 놈이 있다면, 자기 자리가 더 앞에 있는 놈은 무조건 존재함
+- swap이 일어난단건 자기 자리가 더 뒤나 앞에 있는 놈들이 존재한단 뜻
+[오답]
+- 힌트 세 번이나 참고함
+	- 메모리 초과는 bufferReader로 해결
+	- 전/후 인덱스 비교
+	- 인덱스 비교 시 +- 구분
 */
 public class Baekjoon1377_버블소트 {
 	private static int solution(int[] numbers, int n) {
@@ -20,55 +33,49 @@ public class Baekjoon1377_버블소트 {
 		for (int i = 1; i <= n; i++) {
 			before.put(numbers[i], i);
 		}
+
 		Arrays.sort(numbers);
 
 		HashMap<Integer, Integer> after = new HashMap<>();
 		for (int i = 1; i <= n; i++) {
 			after.put(numbers[i], i);
 		}
-		int minIndex = 100;
-		int minSub = 10_000_000;
+
+		int maxSub = 0;
 		for (int i = 1; i <= n; i++) {
 			int number = numbers[i];
-			int sub = Math.abs(before.get(number) - after.get(number));
-			if (sub < minSub) {
-				minSub = sub;
-				minIndex = before.get(number);
-			} else if (sub == minSub) {
-				if (before.get(number) > minIndex) {
-					minIndex = before.get(number);
-				}
+			int sub = before.get(number) - after.get(number);
+			if (sub > maxSub) {
+				maxSub = sub;
 			}
 		}
-
-		return minIndex;
+		return maxSub + 1;
 	}
 
 	public static void main(String[] args) throws Exception {
 		System.setIn(new java.io.FileInputStream("res/input.txt"));
-		java.util.Scanner sc = new java.util.Scanner(System.in);
-
-		int n = sc.nextInt();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
 		int[] numbers = new int[n + 1];
 		for (int i = 1; i <= n; i++) {
-			numbers[i] = sc.nextInt();
+			numbers[i] = Integer.parseInt(br.readLine());
 		}
 
 		System.out.println(solution(numbers, n));
 
-		sc.close();
+		br.close();
 	}
 }
 
 // private static int solution(int[] numbers, int n) {
-// 	for (int i = 1; i <= n; i++) {
+// 	for (int i = 1; i < n; i++) {
 // 		System.out.println("i = " + i);
 // 		for (int number : numbers) {
 // 			System.out.print(" " + number);
 // 		}
 // 		System.out.println();
 // 		boolean changed = false;
-// 		for (int j = 1; j <= n - i; j++) {
+// 		for (int j = 1; j < n - i; j++) {
 // 			if (numbers[j] > numbers[j + 1]) {
 // 				changed = true;
 // 				int temp = numbers[j];
