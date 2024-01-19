@@ -1,4 +1,4 @@
-package temp;
+package 이분탐색;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -36,14 +36,18 @@ public class Baekjoon7795_먹을것인가먹힐것인가 {
 
 		while (true) {
 			int middle = (left + right) / 2;
+
 			if (target == b[middle]) {
-				return middle + 1;
+				return middle;
 			} else if (target < b[middle]) {
 				right = middle - 1;
 			} else {
 				left = middle + 1;
-				count += (left - right);
+				// count++;
+				// count += (right - left);
+				count = middle + 1;
 			}
+
 			if (left > right) { //  || right < 0 || left > b.length - 1
 				return count;
 			}
@@ -54,7 +58,6 @@ public class Baekjoon7795_먹을것인가먹힐것인가 {
 		System.setIn(new java.io.FileInputStream("res/input.txt"));
 		// BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Scanner sc = new Scanner(System.in);
-
 		int T = sc.nextInt();
 		for (int test_case = 1; test_case <= T; test_case++) {
 			int n = sc.nextInt();
