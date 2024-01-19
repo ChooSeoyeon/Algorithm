@@ -16,8 +16,14 @@ public class Buffer {
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-		int T = Integer.parseInt(br.readLine());
-		System.out.println("T = " + T);
+		int n = Integer.parseInt(br.readLine());
+		System.out.println("n = " + n);
+
+		String[] input = br.readLine().split(" ");
+		int[] numbers = new int[n];
+		for (int i = 0; i < n; i++) {
+			numbers[i] = Integer.parseInt(input[i]);
+		}
 
 		br.close();
 	}
