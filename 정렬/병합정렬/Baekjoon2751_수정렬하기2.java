@@ -1,4 +1,4 @@
-package example;
+package 정렬.병합정렬;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
