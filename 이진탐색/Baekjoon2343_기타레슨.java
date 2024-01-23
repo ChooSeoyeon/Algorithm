@@ -1,4 +1,4 @@
-package temp;
+package 이진탐색;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 			- mid가 타깃보다 크다고 간주하고, 탐색 범위를 mid보다 작은 쪽으로 변경
 				- 타깃보다 큰 것으로 간주하는 이유는 최소의 값을 찾아야 하기에 지금 찾은 yes보다 작은 게 더 있는지 확인하기 위함
 - yes/no 문제에 답하기
+	- 블루레이의 앞에서부터 강의를 들어갈 수 있을 만큼 들어가게 하면서 끝까지 다 넣는게 가능한지 보기
 [메모]
 - 최적화 문제를 결정 문제로 바꾸기 (질문의 앞뒤를 바꿔서 정답을 매개변수로 두게 하기)
 	- 최적화 문제
@@ -46,35 +47,26 @@ import java.io.InputStreamReader;
 [오답]
 - 처음에 yes/no 정답 구하는 걸 틀림
 	- 블루레이 크기 * 개수(3) 가 전체 합한 것보다 크거나 같으면 yes ->  반례) 15*3=45
-- isPossible은 매개변수 탐색 코드 직접 예시 안 보고 구현하는 데에 너무 많은 생각을 하고선 더이상 생각할 힘이 안 남아있어서 참고함 ㅠ 꼭 다시 생각해보기
-	https://nahwasa.com/entry/%EC%9E%90%EB%B0%94-%EB%B0%B1%EC%A4%80-2343-%EA%B8%B0%ED%83%80-%EB%A0%88%EC%8A%A8-java?category=1049955
+- isPossible은 매개변수 탐색 코드 직접 예시 안 보고 구현하는 데에 너무 많은 생각을 하고선 더이상 생각할 힘이 안 남아있어서 참고함
 - 메모리 초과 나서 parameters 배열 없애고 int형 변수 숫자 올려가며 이용하게 변경함
 */
 public class Baekjoon2343_기타레슨 {
 	private static int[] numbers;
-	private static int sum;
 	private static int n;
 	private static int m;
 
 	private static int solution() {
-		calculateSum();
 		return binarySearch();
 	}
 
-	private static void calculateSum() {
-		sum = 0;
-		for (int number : numbers) {
-			sum += number;
-		}
-	}
-
-	private static boolean isPossible(int limit) {
-		int idx = 0;
-		for (int i = 0; i < m; i++) {
-			int sum = 0;
-			while (idx < n && sum <= limit) {
-				if (sum + numbers[idx] > limit)
+	private static boolean isPossible(int size) { // 각 블루레이의 크기
+		int idx = 0; // 강의 인덱스
+		for (int i = 0; i < m; i++) { // 블루레이 개수만큼 반복
+			int sum = 0; // 각 블루레이에 들어간 강의 길이
+			while (idx < n && sum <= size) {
+				if (sum + numbers[idx] > size) {
 					break;
+				}
 				sum += numbers[idx++];
 			}
 		}
@@ -84,7 +76,7 @@ public class Baekjoon2343_기타레슨 {
 	private static int binarySearch() {
 		int result = 0;
 		int left = numbers[numbers.length - 1];
-		int right = sum;
+		int right = calculateSum();
 
 		while (left <= right) {
 			int mid = (left + right) / 2;
@@ -97,6 +89,14 @@ public class Baekjoon2343_기타레슨 {
 		}
 
 		return result + 1;
+	}
+
+	private static int calculateSum() {
+		int sum = 0;
+		for (int number : numbers) {
+			sum += number;
+		}
+		return sum;
 	}
 
 	public static void main(String[] args) throws Exception {
