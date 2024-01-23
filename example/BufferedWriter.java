@@ -2,6 +2,7 @@ package example;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 /*
 [설명]
@@ -10,7 +11,7 @@ import java.io.InputStreamReader;
 -
 [메모]
 */
-public class BufferReadOnly {
+public class BufferedWriter {
 	private static int solution(int n) {
 		return n;
 	}
@@ -19,6 +20,7 @@ public class BufferReadOnly {
 		System.setIn(new java.io.FileInputStream("res/input.txt"));
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		java.io.BufferedWriter bw = new java.io.BufferedWriter(new OutputStreamWriter(System.out));
 
 		int n = Integer.parseInt(br.readLine());
 
@@ -28,8 +30,9 @@ public class BufferReadOnly {
 			numbers[i] = Integer.parseInt(input[i]);
 		}
 
-		System.out.println(solution(n));
+		bw.write(solution(n));
 
+		bw.flush();
 		br.close();
 	}
 }
