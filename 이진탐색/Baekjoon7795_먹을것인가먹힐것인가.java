@@ -17,6 +17,9 @@ import java.util.Scanner;
 - 4 -> 1,3,6 중에 4보다 작은 애 몇 개인지 찾아야 함 -> 1,3 찾는 경우
     - 3 < 4 -> 6을 보기
     - 6 > 4 -> 어라, 찾았다. 3이 정답이야
+[오답]
+- count(result)를 최신값으로 갱신하면 되는데, 합하려 해서 못풀었음.
+	- 합하면 어쩄든 이분 탐색이 거치지 않는 곳 있어서 정답을 찾을 수 없음
 */
 public class Baekjoon7795_먹을것인가먹힐것인가 {
 	private static int solution(int[] a, int[] b) {
