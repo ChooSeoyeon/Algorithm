@@ -18,7 +18,6 @@ public class BufferedWriter {
 
 	public static void main(String[] args) throws Exception {
 		System.setIn(new java.io.FileInputStream("res/input.txt"));
-
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		java.io.BufferedWriter bw = new java.io.BufferedWriter(new OutputStreamWriter(System.out));
 

@@ -17,7 +17,6 @@ public class Buffer {
 
 	public static void main(String[] args) throws Exception {
 		System.setIn(new java.io.FileInputStream("res/input.txt"));
-
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int n = Integer.parseInt(br.readLine());
