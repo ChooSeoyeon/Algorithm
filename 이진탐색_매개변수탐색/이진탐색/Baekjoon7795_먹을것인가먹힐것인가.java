@@ -1,4 +1,4 @@
-package 이진탐색;
+package 이진탐색_매개변수탐색.이진탐색;
 
 import java.util.Arrays;
 import java.util.Scanner;
