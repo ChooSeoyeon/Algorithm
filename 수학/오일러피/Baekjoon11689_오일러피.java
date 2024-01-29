@@ -17,6 +17,10 @@ import java.util.LinkedHashSet;
 - 정통 과정 -> 우리는 P[N]만 알면 되므로 배열 만들 필요 없을 듯
 	- 1~N까지 배열 만들기 (인덱스랑 값 일치하게 하기) -> 인덱스 : i, 값 : P[i]
 	- 2부터 쭉 보는데 소수라면 그 수 K의 배수들에 대해 P[i]=P[i]-P[i]/K 연산 수행
+[오딥]
+- 소인수분해를 구해야겠단 아이디어는 혼자 떠올렸는데,
+	- 빨리 내 아이디어를 검증하고 싶단 생각에 소인수분해 구하는 코드는 남의 코드 겟챠함.
+	- 근데 linkedhashset은 내 아이디어.
 */
 public class Baekjoon11689_오일러피 {
 	private static long solution(long n) {
