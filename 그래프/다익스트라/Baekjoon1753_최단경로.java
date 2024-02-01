@@ -15,7 +15,7 @@ import java.util.PriorityQueue;
 1. 우선순위 큐에 (거리, 노드)꼴로 (0, 시작점)을 추가, 최단 거리 배열에 시작점은 0으로, 나머지는 큰 수로 초기화
 2. 우선순위 큐에서 거리가 가장 작은 원소를 pop하여 선택하고, 원소의 거리가 최단 거리 배열의 값과 같은지 확인
 3. 선택한 노드와 이웃한 노드들의 최단 거리 갱신되어야 하면, 최단 거리 테이블 값 변경하고 우선순위 큐에 (거리, 노드)를 추가
-	- 최단 거리 판단 : min(선택 노드의 최단 거리+에지 가중치, 이웃 노드의 최단 거리)
+	- 최단 거리 계산 : min(선택 노드의 최단 거리+에지 가중치, 이웃 노드의 최단 거리)
 4. 우선순위 큐 빌 때까지 2,3을 반복
 [메모]
 - 다익스트라를 택한 이유
@@ -26,6 +26,7 @@ import java.util.PriorityQueue;
 	 	-> compareTo(T o) 재정의(override)
 	- comparator : 두 매개변수 객체를 비교
 	 	-> compare(T o1, T o2) 구현
+- 과정 3에서 갱신 안 되어도 될 때 큐 넣어도 이론상 문제는 없지만, 메모리 초과 뜸
 */
 public class Baekjoon1753_최단경로 {
 	static class Edge implements Comparable<Edge> {
@@ -80,7 +81,7 @@ public class Baekjoon1753_최단경로 {
 			}
 
 			// 3. 선택한 노드와 이웃한 노드들의 최단 거리 갱신되어야 하면, 최단 거리 테이블 값 변경하고 우선순위 큐에 (거리, 노드)를 추가
-			// - 최단 거리 판단 : min(선택 노드의 최단 거리+에지 가중치, 이웃 노드의 최단 거리)
+			// 최단 거리 계산 : min(선택 노드의 최단 거리+에지 가중치, 이웃 노드의 최단 거리)
 			for (Edge nearEdge : graph[selectEdge.end]) {
 				int min = Math.min(distance[selectEdge.end] + nearEdge.weight, distance[nearEdge.end]);
 				if (min != distance[nearEdge.end]) {
