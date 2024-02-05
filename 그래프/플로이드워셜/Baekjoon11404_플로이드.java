@@ -18,13 +18,16 @@ import java.io.InputStreamReader;
 	- 모든 노드 간에 최단 거리를 구해야 했음
 [오답]
 - 시작 노드와 도착 노드를 연결하는 간선이 하나가 아닐 수 있다는 말 안보고서, 그래프 생성 시 처리 안해줘서 틀릴 뻔 함
+- 갈 수없는 경우는 0 출력하랬는데 큰 수 출력 그대로 냅둬서 틀림. 문제 똑바로 읽기.
 */
 public class Baekjoon11404_플로이드 {
+	private static final int INF = 99_999_999;
+
 	private static int[][] solution(int n, int m, int[][] numbers) {
 		int[][] distance = new int[n + 1][n + 1];
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= n; j++) {
-				distance[i][j] = 99_999_999;
+				distance[i][j] = INF;
 			}
 		}
 
@@ -43,6 +46,14 @@ public class Baekjoon11404_플로이드 {
 			for (int i = 1; i <= n; i++) {
 				for (int j = 1; j <= n; j++) {
 					distance[i][j] = Math.min(distance[i][j], distance[i][k] + distance[k][j]);
+				}
+			}
+		}
+
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				if (distance[i][j] == INF) {
+					distance[i][j] = 0;
 				}
 			}
 		}
