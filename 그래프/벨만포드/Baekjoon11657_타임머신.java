@@ -33,12 +33,14 @@ public class Baekjoon11657_타임머신 {
 		distance[START] = 0;
 
 		// 2. 최단거리를 사용하는 에지 개수 점차 늘려가며 업데이트 (D[s]!=무한대 && D[e]>D[s]+w 일 때, D[s]+w로 업데이트)
-		for (int i = 1; i <= m; i++) {
-			for (int j = 1; j <= m; j++) {
+		for (int i = 1; i <= m; i++) { // 경로에 사용할 에지의 개수 : 1 ~ m개
+			// 위 반복문 한 번 돌 때마다 시작점으로부터 연결되어 무한대가 아니게 갱신되는 뎁스가 1씩 증가함. 즉, 경로에 들어간 에지 개수가 1씩 증가함.
+			for (int j = 1; j <= m; j++) { // 경로에 들어갈 수 있는지 살펴볼 에지 번호
 				int start = numbers[j][0];
 				int end = numbers[j][1];
 				int weight = numbers[j][2];
 				if (distance[start] != INFINITE && distance[end] > distance[start] + weight) {
+					// 시작점과 연결되어 있고, 이전 경로보다 해당 에지를 사용한 경로가 더 최단 경로라면 업데이트
 					distance[end] = distance[start] + weight;
 				}
 			}
