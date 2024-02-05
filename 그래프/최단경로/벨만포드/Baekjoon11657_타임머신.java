@@ -1,4 +1,4 @@
-package 그래프.벨만포드;
+package 그래프.최단경로.벨만포드;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

@@ -1,4 +1,4 @@
-package 그래프.다익스트라;
+package 그래프.최단경로.다익스트라;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -12,11 +12,9 @@ import java.util.PriorityQueue;
 - 서로 다른 두 정점 사이에 여러 간선이 존재할 수도 있음
 [접근] 다익스트라
 0. 가중치 있는 그래프를 인접리스트로 표현하기
-1. 우선순위 큐에 (거리, 노드)꼴로 (0, 시작점)을 추가, 최단 거리 배열에 시작점은 0으로, 나머지는 큰 수로 초기화
-2. 우선순위 큐에서 거리가 가장 작은 원소를 pop하여 선택하고, 원소의 거리가 최단 거리 배열의 값과 같은지 확인
-3. 선택한 노드와 이웃한 노드들의 최단 거리 갱신되어야 하면, 최단 거리 테이블 값 변경하고 우선순위 큐에 (거리, 노드)를 추가
-	- 최단 거리 계산 : min(선택 노드의 최단 거리+에지 가중치, 이웃 노드의 최단 거리)
-	- 최단 거리 갱신 조건 : "선택 노드의 최단 거리+에지 가중치"가 "이웃 노드의 최단 거리"보다 더 작을 때만 최단 거리 갱신
+1. 우선순위 큐에 (거리, 노드)꼴로 (0, 시작점)을 추가, 최단 거리 배열은 큰수로 초기화
+2. 우선순위 큐에서 거리가 가장 작은 원소를 선택(pop)하고, 한 번도 선택된 적이 없는 노드라면 최단 거리 배열에 원소의 가중치 값 넣기
+3. 선택한 노드와 이웃한 노드가 한 번도 선택된 적이 없는 노드라면, 우선순위 큐에 (거리, 노드)를 추가
 4. 우선순위 큐 빌 때까지 2,3을 반복
 [메모]
 - 다익스트라를 택한 이유
@@ -27,9 +25,8 @@ import java.util.PriorityQueue;
 	 	-> compareTo(T o) 재정의(override)
 	- comparator : 두 매개변수 객체를 비교
 	 	-> compare(T o1, T o2) 구현
-- 과정 3에서 갱신 안 되어도 될 때 큐 넣어도 이론상 문제는 없지만, 메모리 초과 뜸
 */
-public class Baekjoon1753_최단경로_Sol1 {
+public class Baekjoon1753_최단경로_Sol2 {
 	private static final int INFINITE = 99_999_999;
 
 	private static class Edge implements Comparable<Edge> {
@@ -64,33 +61,29 @@ public class Baekjoon1753_최단경로_Sol1 {
 			graph[u].add(new Edge(w, v));
 		}
 
-		// 1. 우선순위 큐에 (거리, 노드)꼴로 (0, 시작점)을 추가, 최단 거리 배열에 시작점은 0으로, 나머지는 큰 수로 초기화
+		// 1. 우선순위 큐에 (거리, 노드)꼴로 (0, 시작점)을 추가, 최단 거리 배열은 큰수로 초기화
 		PriorityQueue<Edge> pq = new PriorityQueue<>();
 		pq.add(new Edge(0, start));
 
 		int[] distance = new int[vertex + 1];
 		for (int i = 1; i <= vertex; i++) {
 			distance[i] = INFINITE;
-			if (i == start) {
-				distance[i] = 0;
-			}
 		}
 
 		while (!pq.isEmpty()) {
-			// 2. 우선순위 큐에서 거리가 가장 작은 원소를 pop하여 선택하고, 원소의 거리가 최단 거리 배열의 값과 같은지 확인
+			// 2. 우선순위 큐에서 거리가 가장 작은 원소를 선택(pop)하고, 한 번도 선택된 적이 없는 노드라면 최단 거리 배열에 원소의 가중치 값 넣기
 			Edge select = pq.poll();
-			if (select.weight != distance[select.node]) {
+			if (distance[select.node] != INFINITE) {
 				continue;
 			}
+			distance[select.node] = select.weight;
 
-			// 3. 선택한 노드와 이웃한 노드들의 최단 거리 갱신되어야 하면, 최단 거리 테이블 값 변경하고 우선순위 큐에 (거리, 노드)를 추가
-			// 최단 거리 갱신 조건 : "선택 노드의 최단 거리+에지 가중치"가 "이웃 노드의 최단 거리"보다 더 작을 때만 최단 거리 갱신
+			// 3. 선택한 노드와 이웃한 노드가 한 번도 선택된 적이 없는 노드라면, 우선순위 큐에 (거리, 노드)를 추가
 			for (Edge near : graph[select.node]) {
-				if (distance[select.node] + near.weight >= distance[near.node]) {
+				if (distance[near.node] != INFINITE) {
 					continue;
 				}
-				distance[near.node] = distance[select.node] + near.weight;
-				pq.add(new Edge(distance[near.node], near.node));
+				pq.add(new Edge(distance[select.node] + near.weight, near.node));
 			}
 		}
 

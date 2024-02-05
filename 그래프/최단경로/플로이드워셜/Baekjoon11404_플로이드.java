@@ -1,4 +1,4 @@
-package 그래프.플로이드워셜;
+package 그래프.최단경로.플로이드워셜;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
