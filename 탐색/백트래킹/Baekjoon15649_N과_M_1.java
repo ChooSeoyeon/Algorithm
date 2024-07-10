@@ -1,4 +1,4 @@
-package random;
+package 탐색.백트래킹;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
